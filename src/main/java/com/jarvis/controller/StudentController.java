@@ -1,9 +1,9 @@
 package com.jarvis.controller;
 
-import com.jarvis.enums.Gender;
 import com.jarvis.model.Student;
+import com.jarvis.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
@@ -11,12 +11,15 @@ import java.util.*;
 @RestController
 public class StudentController {
 
+	private final StudentService studentService;
+
+	@Autowired
+	public StudentController(StudentService studentService) {
+		this.studentService = studentService;
+	}
+
 	@GetMapping("/students")
 	public List<Student> getAllStudents() {
-		List<Student> students = new ArrayList<>();
-		students.add(new Student(UUID.randomUUID(), "Ram", "Gopal", "ramgopalbhat10@gmail.com", Gender.MALE));
-		students.add(new Student(UUID.randomUUID(), "Subramanya", "Bhat", "ramgopalbhat10@gmail.com", Gender.MALE));
-		students.add(new Student(UUID.randomUUID(), "Shruthi", "Bhat", "shruthibhat4@gmail.com", Gender.FEMALE));
-		return students;
+		return studentService.getAllStudents();
 	}
 }
